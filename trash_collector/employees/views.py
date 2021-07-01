@@ -12,8 +12,8 @@ from datetime import date
 
 
 def index(request):
-    user = request.uset
     Customer = apps.get_model('customers.Customer')
+    user = request.uset
     all_customers = Customer.objects.all()
     try:
         logged_in_employee = Employees.objects.get(user=user)
@@ -28,11 +28,14 @@ def index(request):
 
 def registration(request):
     if request.method == 'POST':
+        user = request.user
         name = request.POST.get('name')
-        route = request.POST.get('route')
-        new_user = Employee(name=name, route=route)
+        zip_code = request.POST.get('zip_code')
+        new_user = Employee(user=user, name=name, zip_code=zip_code)
         new_user.save()
         return HttpResponseRedirect(reverse('employees:index'))
+    else:
+        return render(request, 'employees/registration.html')
 
 
 # HEAD
