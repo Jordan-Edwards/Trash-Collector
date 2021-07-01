@@ -7,4 +7,5 @@ from django.db import models
 
 class Employee(models.Model):
     name = models.CharField(max_length=20)
-    zipcode = models.CharField(max_length=5)
+    zip_code = models.CharField(max_length=5)
+    user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.CASCADE)
