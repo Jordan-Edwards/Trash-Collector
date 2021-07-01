@@ -68,9 +68,10 @@ def onetime_pickup(request):
 
 
 def suspension(request):
+    # if start_suspension == True:
     pass
 
 
-def monthly_statement(request):
+def statement(request):
     pass
 
