@@ -17,6 +17,7 @@ def index(request):
     return render(request, 'customers/index.html')
 
 
+# allows user to sign up for account
 def registration(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -31,3 +32,45 @@ def registration(request):
         return HttpResponseRedirect(reverse('customers:index'))
     else:
         return render(request, "customers/register.html")
+
+
+# create and edit trash pickup
+def create_edit_pickup(request, user):
+    if request.method == 'POST':
+        if Customer.weekly_pickup_day == Null:
+            weekly_pickup_day = request.POST.get('name')
+            new_weekly_pickup_day = Customer(weekly_pickup_day=weekly_pickup_day)
+            new_weekly_pickup_day.save()
+            return HttpResponseRedirect(reverse('customers:index'))
+        else:
+            edit_weekly_pickup_day = Customer.objects.get(pk=user)
+            context = {
+                'edit_weekly_pickup_day': edit_weekly_pickup_day
+            }
+            if request.method == 'POST':
+                edit_weekly_pickup_day.weekly_pickup_day = request.POST.get('weekly_pickup_day')
+                edit_weekly_pickup_day.save()
+                return HttpResponseRedirect(reverse('customers:index'))
+            else:
+                return render(request, "customers/edit_weekly_pickup.html", context)
+    else:
+        return render(request, "customers/home.html")
+
+
+def onetime_pickup(request):
+    if request.method == 'POST':
+        onetime_pickup = request.POST.get('onetime_pickup')
+        new_onetime_pickup = Customer(onetime_pickup=onetime_pickup)
+        new_onetime_pickup.save()
+        return HttpResponseRedirect(reverse('customers:index'))
+    else:
+        return render(request, "customers/onetime_pickup.html")
+
+
+def suspension(request):
+    pass
+
+
+def monthly_statement(request):
+    pass
+
