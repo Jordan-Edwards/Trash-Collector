@@ -13,12 +13,12 @@ from datetime import date
 
 def index(request):
     Customer = apps.get_model('customers.Customer')
-    user = request.uset
+    user = request.user
     all_customers = Customer.objects.all()
     try:
         logged_in_employee = Employee.objects.get(user=user)
     except:
-        return HttpResponseRedirect(reverse('employees:create'))
+        return HttpResponseRedirect(reverse('employees:registration'))
     context = {
         'logged_in_employee': logged_in_employee,
         'all_customers': all_customers,

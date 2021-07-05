@@ -9,5 +9,4 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('registration/', views.registration, name='registration'),
     path('filter/', views.daily_view, name='filter')
-    #  HEAD
 ]
