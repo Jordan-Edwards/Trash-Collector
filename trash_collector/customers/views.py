@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import NewServiceForm
+from .models import Customer
 
 # Create your views here.
 
@@ -27,3 +28,15 @@ def registration(request):
             return HttpResponseRedirect(reverse('customers:index'))
     context = {'form': form}
     return render(request, "customers/registration.html", context)
+
+
+def change(request, user_id):
+    customer = Customer.objects.get(id=user_id)
+    form = NewServiceForm(instance=customer)
+    if request.method == 'POST':
+        form = NewServiceForm(request.POST or None, instance=customer)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('customers:index'))
+    context = {'form': form, 'customer': customer}
+    return render(request, 'customers/change.html', context)

@@ -5,7 +5,6 @@
 {% block header %} Register For Our Services {% endblock %}
 
 {% block content %}
-  <h2>Sign up For Service</h2>
   <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}

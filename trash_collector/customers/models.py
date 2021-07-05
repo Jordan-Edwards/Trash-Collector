@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 
 class Customer(models.Model):
@@ -10,7 +9,7 @@ class Customer(models.Model):
     start_suspension = models.DateField(blank=True, null=True)
     end_suspension = models.DateField(blank=True, null=True)
     balance = models.IntegerField(default=0)
-    address = models.CharField(max_length=50)
+    address = models.CharField(max_length=10)
     zip_code = models.CharField(max_length=5)
 
     def __str__(self):
