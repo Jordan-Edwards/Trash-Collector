@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
-from .models import Employees
+from .models import Employee
 from django.urls import reverse
 from datetime import date
 
