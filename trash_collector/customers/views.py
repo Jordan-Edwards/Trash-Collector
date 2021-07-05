@@ -37,7 +37,7 @@ def registration(request):
 # create and edit trash pickup
 def create_edit_pickup(request, user):
     if request.method == 'POST':
-        if Customer.weekly_pickup_day == Null:
+        if Customer.weekly_pickup_day == 'Null':
             weekly_pickup_day = request.POST.get('name')
             new_weekly_pickup_day = Customer(weekly_pickup_day=weekly_pickup_day)
             new_weekly_pickup_day.save()
