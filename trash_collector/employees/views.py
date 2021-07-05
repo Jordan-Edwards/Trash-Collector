@@ -16,7 +16,7 @@ def index(request):
     user = request.uset
     all_customers = Customer.objects.all()
     try:
-        logged_in_employee = Employees.objects.get(user=user)
+        logged_in_employee = Employee.objects.get(user=user)
     except:
         return HttpResponseRedirect(reverse('employees:create'))
     context = {
@@ -42,7 +42,7 @@ def registration(request):
 
 def daily_view(request):
     user = request.user
-    logged_in_employee = Employees.objects.get(user=user)
+    logged_in_employee = Employee.objects.get(user=user)
     Customer = apps.get_model('customers.Customer')
     all_customers = Customer.objects.all()
     curr_date = date.today()
