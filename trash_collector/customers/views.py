@@ -24,7 +24,6 @@ def registration(request):
         form = NewServiceForm(request.POST)
         if form.is_valid():
             form.save()
-        new_user.save()
-        return HttpResponseRedirect(reverse('customers:index'))
-    else:
-        return render(request, "customers/register.html")
+            return HttpResponseRedirect(reverse('customers:index'))
+    context = {'form': form}
+    return render(request, "customers/registration.html", context)
