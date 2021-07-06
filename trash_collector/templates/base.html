@@ -16,7 +16,7 @@
         <a href="{% url 'customers:change' user.id %}">Change Your Services</a>
         <a href="{% url 'customers:pickup' user.id %}">Schedule an Extra Pickup</a>
         <a href="{% url 'customers:suspension' user.id %}">Manage Account Suspension</a>
-
+        <a href="{% url 'customers:statement' user.id %}">View Your Statement</a>
       </div>
     </nav>
     {% elif group.name == "Employees" %}

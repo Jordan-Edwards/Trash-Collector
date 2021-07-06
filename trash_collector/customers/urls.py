@@ -9,5 +9,5 @@ urlpatterns = [
     path('change/<int:user_id>/', views.change, name="change"),
     path('pickup/<int:user_id>/', views.pickup, name="pickup"),
     path('suspension/<int:user_id>/', views.suspension, name="suspension"),
-    # path('statement/', views.statement, name="statement")
+    path('statement/<int:user_id>/', views.statement, name="statement")
 ]

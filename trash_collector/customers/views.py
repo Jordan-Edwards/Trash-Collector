@@ -64,3 +64,11 @@ def suspension(request, user_id):
             return HttpResponseRedirect(reverse('customers:index'))
     context = {'form': form, 'customer': customer}
     return render(request, 'customers/suspension.html', context)
+
+
+def statement(request, user_id):
+    customer = Customer.objects.get(id=user_id)
+    context = {
+        'customer': customer
+    }
+    return render(request, 'customers/statement.html', context)
