@@ -15,6 +15,7 @@ class NewServiceForm(ModelForm):
                   "user",
                   "address",
                   "zip_code",
+                  "start_pickup_day",
                   "weekly_pickup_day"}
 
 

@@ -63,6 +63,10 @@ def suspension(request, user_id):
     customer = Customer.objects.get(user_id=user_id)
     form = AccountSuspension(instance=customer)
     if request.method == 'POST':
+        if Customer.start_suspension(user_id=user_id, null=True):
+            Customer.weekly_pickup_day(user_id=user_id, null=False)
+        if Customer.start_suspension(user_id=user_id, null=False):
+            Customer.weekly_pickup_day(user_id=user_id, null=True)
         form = AccountSuspension(request.POST or None, instance=customer)
         if form.is_valid():
             form.save()
