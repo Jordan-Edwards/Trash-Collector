@@ -2,6 +2,12 @@ from django.forms import ModelForm
 from .models import Customer
 
 
+class CustomerDetails(ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
 class NewServiceForm(ModelForm):
     class Meta:
         model = Customer

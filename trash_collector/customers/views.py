@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import NewServiceForm, OneTimePickup, AccountSuspension
+from .forms import NewServiceForm, OneTimePickup, AccountSuspension, CustomerDetails
 from .models import Customer
 
 
@@ -9,6 +9,18 @@ def index(request):
     user = request.user
     print(user)
     return render(request, 'customers/index.html')
+
+
+def detail(request, user_id):
+    customer = Customer.objects.get(id=user_id)
+    form = CustomerDetails(instance=customer)
+    if request.method == 'POST':
+        form = CustomerDetails(request.POST or None, instance=customer)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('customers:index'))
+    context = {'form': form, 'customer': customer}
+    return render(request, 'customers/detail.html', context)
 
 
 # allows user to sign up for account
