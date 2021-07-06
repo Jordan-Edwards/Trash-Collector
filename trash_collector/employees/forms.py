@@ -6,4 +6,5 @@ class NewEmployeeForm(ModelForm):
     class Meta:
         model = Employee
         fields = {"name",
+                  "user",
                   "zip_code"}

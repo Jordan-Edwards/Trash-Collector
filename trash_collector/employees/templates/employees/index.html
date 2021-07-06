@@ -11,9 +11,11 @@
             <th>Name</th>
             <th>Address</th>
             <th>Zipcode</th>
-            <th>Pickup Confirmation</th>
           </tr>
         </thead>
+      {% for Customer in customers &}
+      {& for Employee in employees  %}
+      {% if Customer.zip_code == Employee.zip_code %}
         <tbody>
           <tr>
             <td>{{Customer.name}}</td>
@@ -22,4 +24,9 @@
           </tr>
        </tbody>
       </table>
+        {% else %}
+    <p>You are at the employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+    {% endif %}
 {% endblock %}

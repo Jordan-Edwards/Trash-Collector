@@ -25,10 +25,8 @@
  <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <a href="{% url 'logout' %}">Log Out</a>
-        <a href="{% url 'employees:index' %}">Home</a>
-        <a href="{% url 'employees:filter'  %}">View Customers</a>
-        <a href="{% url 'employees:daily' %}">Daily View</a>
         <a href="{% url 'employees:registration' %}">Register as an Employee</a>
+        <a href="{% url 'employees:index' %}">Home</a>
       </div>
     </nav>    {% endif %}
   {% endfor %}
