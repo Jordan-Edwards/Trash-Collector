@@ -5,11 +5,9 @@
 {% block header %} Register Account {% endblock %}
 
 {% block content %}
-<h2>Sign up as a Employee</h2>
-<form action="{% url 'employees:registration' %}" method="post">
+  <form method="POST">
     {% csrf_token %}
-    Name:<input type="text" name="name" id="name"><br>
-    Zipcode:<input type="text" name="route" id="route"><br>
+    {{ form.as_p }}
     <button type="submit">Sign Up</button>
-</form>
+  </form>
 {% endblock %}
