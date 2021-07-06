@@ -14,6 +14,8 @@
         <a href="{% url 'customers:index' %}">Home</a>
         <a href="{% url 'customers:registration' %}">Register For Services</a>
         <a href="{% url 'customers:change' user.id %}">Change Your Services</a>
+        <a href="{% url 'customers:pickup' user.id %}">Schedule an Extra Pickup</a>
+        <a href="{% url 'customers:suspension' user.id %}">Manage Account Suspension</a>
 
       </div>
     </nav>

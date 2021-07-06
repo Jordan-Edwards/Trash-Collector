@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import NewServiceForm
+from .forms import NewServiceForm, OneTimePickup, AccountSuspension
 from .models import Customer
 
 # Create your views here.
@@ -40,3 +40,27 @@ def change(request, user_id):
             return HttpResponseRedirect(reverse('customers:index'))
     context = {'form': form, 'customer': customer}
     return render(request, 'customers/change.html', context)
+
+
+def pickup(request, user_id):
+    customer = Customer.objects.get(id=user_id)
+    form = OneTimePickup(instance=customer)
+    if request.method == 'POST':
+        form = OneTimePickup(request.POST or None, instance=customer)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('customers:index'))
+    context = {'form': form, 'customer': customer}
+    return render(request, 'customers/pickup.html', context)
+
+
+def suspension(request, user_id):
+    customer = Customer.objects.get(id=user_id)
+    form = AccountSuspension(instance=customer)
+    if request.method == 'POST':
+        form = AccountSuspension(request.POST or None, instance=customer)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('customers:index'))
+    context = {'form': form, 'customer': customer}
+    return render(request, 'customers/suspension.html', context)

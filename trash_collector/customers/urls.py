@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('registration/', views.registration, name="registration"),
     path('change/<int:user_id>/', views.change, name="change"),
-    # path('onetime_pickup/', views.onetime_pickup, name="onetime_pickup"),
-    # path('account_suspension/', views.suspension, name="account_suspension"),
+    path('pickup/<int:user_id>/', views.pickup, name="pickup"),
+    path('suspension/<int:user_id>/', views.suspension, name="suspension"),
     # path('statement/', views.statement, name="statement")
 ]
