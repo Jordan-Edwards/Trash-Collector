@@ -66,3 +66,8 @@ def confirm_pickup(request, customer_id):
         return render(request, 'employees/filter.html')
 
 # END OF HEAD
+
+def filter(request, chosen_day):
+    # chosen_day has value of "monday" or "tuesday", etc
+    # use it to filter to find customers whose weekly day is equal to "chosen_day"
+    # will also need a path in urls.py that allows for a string to be passed in

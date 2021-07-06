@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <a href="{% url 'logout' %}">Log Out</a>
         <a href="{% url 'customers:index' %}">Home</a>
-        <a href="{% url 'customers:detail' user.id  %}">Customer Details</a>
+        <a href="{% url 'customers:detail' user.id  %}">Account Details</a>
         <a href="{% url 'customers:registration' %}">Register For Services</a>
         <a href="{% url 'customers:change' user.id %}">Change Your Services</a>
         <a href="{% url 'customers:pickup' user.id %}">Schedule an Extra Pickup</a>
