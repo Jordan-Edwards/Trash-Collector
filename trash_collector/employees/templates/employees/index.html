@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %} Daily View {% endblock %}
+
+{% block header %} Daily View {% endblock %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
-  {% else %}
-    <p>You are at the employee index, but you are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'accounts:register' %}">Sign Up</a>
-  {% endif %}
+  <table class="table table-striped">
+        <thead title="Customers">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Zipcode</th>
+            <th>Pickup Confirmation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{Customer.name}}</td>
+            <td>{{Customer.address}}</td>
+            <td>{{Customer.zip_code}}</td>
+          </tr>
+       </tbody>
+      </table>
 {% endblock %}

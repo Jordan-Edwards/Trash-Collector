@@ -4,8 +4,8 @@ from django.apps import apps
 from .models import Employee
 from django.urls import reverse
 from datetime import date
-
-
+from .forms import NewEmployeeForm
+from customers.models import Customer
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -13,46 +13,36 @@ from datetime import date
 
 def index(request):
     Customer = apps.get_model('customers.Customer')
-    user = request.user
-    all_customers = Customer.objects.all()
-    try:
-        logged_in_employee = Employee.objects.get(user=user)
-    except:
-        return HttpResponseRedirect(reverse('employees:registration'))
+    customer = Customer.objects.all()
     context = {
-        'logged_in_employee': logged_in_employee,
-        'all_customers': all_customers,
+        'customer': customer
     }
     return render(request, 'employees/index.html', context)
 
 
 def registration(request):
+    form = NewEmployeeForm()
     if request.method == 'POST':
-        user = request.user
-        name = request.POST.get('name')
-        zip_code = request.POST.get('zip_code')
-        new_user = Employee(user=user, name=name, zip_code=zip_code)
-        new_user.save()
-        return HttpResponseRedirect(reverse('employees:index'))
-    else:
-        return render(request, 'employees/registration.html')
+        form = NewEmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('employees:index'))
+    context = {'form': form}
+    return render(request, 'employees/registration.html', context)
 
 
-# HEAD
-
-def daily_view(request):
+def daily_view(request, does_pickup=None):
     user = request.user
-    logged_in_employee = Employee.objects.get(user=user)
+    employee = Employee.objects.get(user_id=user.id)
     Customer = apps.get_model('customers.Customer')
-    all_customers = Customer.objects.all()
-    curr_date = date.today()
-    weekday = curr_date.strftime('%A')
-    my_customers = []
-    if request.method == "POST":
-        for customer in all_customers:
-            if customer.zip_code == logged_in_employee.zipcode and customer.pickup_day == weekday and customer.suspension_start == False or customer.onetime_pickup == weekday:
-                my_customers.append(customer)
-    return render(request, 'employees/filter.html')
+    customers = Customer.objects.filter(zip_code=employee.zip_code)
+    does_pickup = False
+    create_route = [does_pickup == True]
+    for Customer in customers:
+        context = {
+            'create_route': create_route
+        }
+    return render(request, 'employees/Daily Route.html', context)
 
 
 def confirm_pickup(request, customer_id):
@@ -61,7 +51,7 @@ def confirm_pickup(request, customer_id):
         customer = Customer.objects.get(id=customer_id)
         customer.balance += 5
         customer.save()
-        return HttpResponseRedirect(reverse('employees:index'))
+        return HttpResponseRedirect(reverse('employee:index'))
     else:
         return render(request, 'employees/filter.html')
 

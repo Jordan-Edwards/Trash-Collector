@@ -12,6 +12,7 @@ class NewServiceForm(ModelForm):
     class Meta:
         model = Customer
         fields = {"name",
+                  "user",
                   "address",
                   "zip_code",
                   "weekly_pickup_day"}
