@@ -12,7 +12,7 @@ def index(request):
 
 
 def detail(request, user_id):
-    customer = Customer.objects.get(id=user_id)
+    customer = Customer.objects.get(user_id=user_id)
     form = CustomerDetails(instance=customer)
     if request.method == 'POST':
         form = CustomerDetails(request.POST or None, instance=customer)
@@ -36,7 +36,7 @@ def registration(request):
 
 
 def change(request, user_id):
-    customer = Customer.objects.get(id=user_id)
+    customer = Customer.objects.get(user_id=user_id)
     form = NewServiceForm(instance=customer)
     if request.method == 'POST':
         form = NewServiceForm(request.POST or None, instance=customer)
@@ -48,7 +48,7 @@ def change(request, user_id):
 
 
 def pickup(request, user_id):
-    customer = Customer.objects.get(id=user_id)
+    customer = Customer.objects.get(user_id=user_id)
     form = OneTimePickup(instance=customer)
     if request.method == 'POST':
         form = OneTimePickup(request.POST or None, instance=customer)
@@ -60,7 +60,7 @@ def pickup(request, user_id):
 
 
 def suspension(request, user_id):
-    customer = Customer.objects.get(id=user_id)
+    customer = Customer.objects.get(user_id=user_id)
     form = AccountSuspension(instance=customer)
     if request.method == 'POST':
         form = AccountSuspension(request.POST or None, instance=customer)
@@ -72,7 +72,7 @@ def suspension(request, user_id):
 
 
 def statement(request, user_id):
-    customer = Customer.objects.get(id=user_id)
+    customer = Customer.objects.get(user_id=user_id)
     context = {
         'customer': customer
     }
