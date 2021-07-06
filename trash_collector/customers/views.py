@@ -4,13 +4,6 @@ from django.urls import reverse
 from .forms import NewServiceForm, OneTimePickup, AccountSuspension
 from .models import Customer
 
-# Create your views here.
-
-# TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
-
-
-# customer homepage
-
 
 def index(request):
     user = request.user
