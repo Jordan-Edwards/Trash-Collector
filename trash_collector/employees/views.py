@@ -12,16 +12,10 @@ from datetime import date
 
 
 def index(request):
-    Customer = apps.get_model('customers.Customer')
-    user = request.user
-    all_customers = Customer.objects.all()
-    try:
-        logged_in_employee = Employee.objects.get(user=user)
-    except:
-        return HttpResponseRedirect(reverse('employees:registration'))
+    customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.all()
     context = {
-        'logged_in_employee': logged_in_employee,
-        'all_customers': all_customers,
+        'customer': customer,
     }
     return render(request, 'employees/index.html', context)
 
@@ -66,8 +60,3 @@ def confirm_pickup(request, customer_id):
         return render(request, 'employees/filter.html')
 
 # END OF HEAD
-
-def filter(request, chosen_day):
-    # chosen_day has value of "monday" or "tuesday", etc
-    # use it to filter to find customers whose weekly day is equal to "chosen_day"
-    # will also need a path in urls.py that allows for a string to be passed in

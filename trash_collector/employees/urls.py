@@ -8,5 +8,4 @@ app_name = "employees"
 urlpatterns = [
     path('', views.index, name="index"),
     path('registration/', views.registration, name='registration'),
-    path('filter/<string:chosen_day>', views.daily_view, name='filter')
 ]
