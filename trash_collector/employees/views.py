@@ -1,6 +1,6 @@
-from datetime import date
+from calendar import calendar
+from datetime import date, datetime
 
-from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
@@ -34,11 +34,10 @@ def index(request):
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         today_day = days[today_num]
         today_date = date.today()
-        customers = Customer.objects.filter(Q(zip_code=zip_code) | Q(weekly_pickup_day=today_num),
-                                            Q(start_suspension=today_date) | Q(end_suspension=today_date),
-                                            Q(onetime_pickup=today_date))
+        customers = Customer.objects.filter(zip_code=zip_code, weekly_pickup_day=today_day)
+        one_time_pickup = Customer.objects.filter(onetime_pickup=today_date, zip_code=zip_code)
         context = {
-            'customers': customers
+            'customers': customers, 'one_time_pickup': one_time_pickup
         }
         return render(request, 'employees/index.html', context)
     except Employee.DoesNotExist:

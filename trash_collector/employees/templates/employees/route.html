@@ -2,7 +2,7 @@
 
 {% block title %} Weekly View{% endblock %}
 {% block header %} <h1>Weekly View</h1> {% endblock %}
-{% block content %} <p><form name='weekform' id="weekform" method="POST" action="{% url 'employees:daily' %}">
+{% block content %} <p><form name='weekform' id="weekform" method="POST" action="{% url 'employees:route' %}">
     {% csrf_token %}
       Day of Week: <select name="dayofweek" id="dayofweek">
   <option value="Monday" selected="Monday">Monday</option>
