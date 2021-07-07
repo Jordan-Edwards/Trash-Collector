@@ -34,12 +34,12 @@ def index(request):
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         today_day = days[today_num]
         today_date = date.today()
-        customers = Customer.objects.filter(Q(zip_code=zip_code), Q(weekly_pickup_day=today_day))
+        customers = Customer.objects.filter(Q(zip_code=zip_code) | Q(weekly_pickup_day=today_num),
+                                            Q(start_suspension=today_date) | Q(end_suspension=today_date),
+                                            Q(onetime_pickup=today_date))
         context = {
             'customers': customers
         }
         return render(request, 'employees/index.html', context)
     except Employee.DoesNotExist:
         return HttpResponseRedirect(reverse('employees:registration'))
-
-
