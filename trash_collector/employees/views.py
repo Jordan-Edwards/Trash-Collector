@@ -42,3 +42,24 @@ def index(request):
         return render(request, 'employees/index.html', context)
     except Employee.DoesNotExist:
         return HttpResponseRedirect(reverse('employees:registration'))
+
+def daily_view(request, does_pickup=None):
+    user = request.user
+    employee = Employee.objects.get(user_id=user.id)
+    Customer = apps.get_model('customers.Customer')
+    customers = Customer.objects.filter(zip_code=employee.zip_code)
+    does_pickup = False
+    create_route = [does_pickup == True]
+    for Customer in customers:
+        context = {
+            'create_route': create_route
+        }
+    return render(request, 'employees/route.html', context)
+
+def confirm_pickup(request, customer_id):
+    if request.method == "POST":
+        Customer = apps.get_model('customers.Customer')
+        customer = Customer.objects.get(id=customer_id)
+        customer.balance += 5
+        customer.save()
+        return HttpResponseRedirect(reverse('employee:index'))
