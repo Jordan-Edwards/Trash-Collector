@@ -6,9 +6,8 @@ from django.shortcuts import render
 from django.apps import apps
 from django.urls import reverse
 from .forms import NewEmployeeForm
-
-# TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 from .models import Employee
+# TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 
 
 def registration(request):
@@ -43,6 +42,27 @@ def index(request):
     except Employee.DoesNotExist:
         return HttpResponseRedirect(reverse('employees:registration'))
 
+
+def check_suspension(the_customer, today_date):
+    start_date = the_customer.start_suspension
+    end_date = the_customer.end_suspension
+    start = start_date
+    end = end_date
+    today = today_date
+    if end is None:
+        pass
+    else:
+        if end > today:
+            the_customer.has_suspension = True
+        elif start > today:
+            the_customer.has_suspension = False
+        elif end == today:
+            the_customer.has_suspension = False
+        else:
+            the_customer.has_suspension = False
+        the_customer.save()
+
+
 def daily_view(request, does_pickup=None):
     user = request.user
     employee = Employee.objects.get(user_id=user.id)
@@ -55,6 +75,7 @@ def daily_view(request, does_pickup=None):
             'create_route': create_route
         }
     return render(request, 'employees/route.html', context)
+
 
 def confirm_pickup(request, customer_id):
     if request.method == "POST":

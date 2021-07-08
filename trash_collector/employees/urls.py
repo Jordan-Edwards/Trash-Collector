@@ -8,4 +8,6 @@ app_name = "employees"
 urlpatterns = [
     path('', views.index, name="index"),
     path('registration/', views.registration, name='registration'),
+    path('route/', views.daily_view, name='route'),
+
 ]
