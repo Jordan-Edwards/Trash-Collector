@@ -6,7 +6,7 @@
 
 <table class="table table-striped">
     <thead title="Customers">
-      <h1>}Daily Route </h1>
+      <h1>Daily Route </h1>
       <tr>
         <th>Name</th>
         <th>Customer Pickup Day</th>
@@ -22,6 +22,7 @@
         <td>{{Customer.weekly_pickup_day}}</td>
         <td><a href="{% url 'employees:confirm_pickup' Customer.id %}">Confirm Pickup</a></td>
       </tr>
+    {% endif %}
     {% endfor %}
    </tbody>
 </table>
