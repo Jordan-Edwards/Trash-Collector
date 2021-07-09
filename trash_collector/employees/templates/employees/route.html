@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
-
 {% block title %} Daily Route {% endblock %}
-
+{% block header %} Daily Route {% endblock %}
 {% block content %}
 
-<table class="table table-striped">
-    <thead title="Customers">
-      <h1>Daily Route </h1>
-      <tr>
-        <th>Name</th>
-        <th>Customer Pickup Day</th>
-        <th>Suspension Status</th>
-        <th>Pickup Confirmation</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for customers in daily_view %}
-    {% if Customer.is_suspended != True %}
-      <tr>
-        <td>{{Customer.name}}</td>
-        <td>{{Customer.weekly_pickup_day}}</td>
-        <td><a href="{% url 'employees:confirm_pickup' Customer.id %}">Confirm Pickup</a></td>
-      </tr>
-    {% endif %}
-    {% endfor %}
-   </tbody>
-</table>
 
 
+  <table class="table table-striped">
+         <thead title="Customers">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Zipcode</th>
+            <th>Pickup Confirmation</th>
+          </tr>
+        </thead>
+        <tbody>
+           {% for custr in customers %}
+          <tr>
+            <td>{{ custr.name }}</td>
+            <td>{{ custr.address }}</td>
+            <td>{{ custr.zip_code }}</td>
+            <td><button type="button">Confirm</button></td>
+          </tr>
+           {% endfor %}
+
+           {% if custr in route %}
+          <tr>
+            <td>{{ custr.name }}</td>
+            <td>{{ custr.address }}</td>
+            <td>{{ custr.zip_code }}</td>
+            <td><button type="button">Confirm</button></td>
+          </tr>
+        {% endif %}
+       </tbody>
+      </table>
 {% endblock %}

@@ -43,38 +43,32 @@ def index(request):
         return HttpResponseRedirect(reverse('employees:registration'))
 
 
-def check_suspension(the_customer, today_date):
-    start_date = the_customer.start_suspension
-    end_date = the_customer.end_suspension
-    start = start_date
-    end = end_date
-    today = today_date
-    if end is None:
-        pass
-    else:
-        if end > today:
-            the_customer.has_suspension = True
-        elif start > today:
-            the_customer.has_suspension = False
-        elif end == today:
-            the_customer.has_suspension = False
-        else:
-            the_customer.has_suspension = False
-        the_customer.save()
-
-
-def daily_view(request, does_pickup=None):
+def daily_view(request):
     user = request.user
-    employee = Employee.objects.get(user_id=user.id)
     Customer = apps.get_model('customers.Customer')
-    customers = Customer.objects.filter(zip_code=employee.zip_code)
-    does_pickup = False
-    create_route = [does_pickup == True]
-    for Customer in customers:
+    employee = Employee.objects.get(user_id=user.id)
+    Customer.objects.filter(zip_code=employee.zip_code)
+    route = []
+    try:
+        employee = Employee.objects.get(user=user)
+        zip_code = employee.zip_code
+        today_num = date.today().weekday()
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        today_day = days[today_num]
+        today_date = date.today()
+        customers = Customer.objects.filter(zip_code=zip_code, weekly_pickup_day=today_day)
+        one_time_pickup = Customer.objects.filter(onetime_pickup=today_date, zip_code=zip_code)
+        start_date = Customer.start_suspension
+        end_date = Customer.end_suspension
+        if today_date.__le__(start_date) and today_date.__ge__(end_date):
+            route.append(Customer)
         context = {
-            'create_route': create_route
+            'customers': customers, 'one_time_pickup': one_time_pickup, 'route': route
         }
-    return render(request, 'employees/route.html', context)
+        return render(request, 'employees/route.html', context)
+    except Employee.DoesNotExist:
+        return HttpResponseRedirect(reverse('employees:registration'))
+
 
 
 def confirm_pickup(request, customer_id):

@@ -12,7 +12,6 @@ class Customer(models.Model):
     balance = models.IntegerField(default=0)
     address = models.CharField(max_length=10)
     zip_code = models.CharField(max_length=5)
-    is_suspended = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return self.name
