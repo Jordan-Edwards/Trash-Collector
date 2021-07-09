@@ -1,11 +1,9 @@
-from calendar import calendar
 from datetime import date, datetime
-
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
 from django.urls import reverse
-from .forms import NewEmployeeForm
+from .forms import NewEmployeeForm, ConfirmCharge
 from .models import Employee
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 
@@ -70,11 +68,13 @@ def daily_view(request):
         return HttpResponseRedirect(reverse('employees:registration'))
 
 
-
-def confirm_pickup(request, customer_id):
-    if request.method == "POST":
-        Customer = apps.get_model('customers.Customer')
-        customer = Customer.objects.get(id=customer_id)
-        customer.balance += 5
-        customer.save()
-        return HttpResponseRedirect(reverse('employee:index'))
+def confirm_pickup(request):
+    Customer = apps.get_model('customers.Customer')
+    form = ConfirmCharge()
+    if request.method == 'POST':
+        form = ConfirmCharge()
+        if form.is_valid():
+            Customer.balance.save()
+            return HttpResponseRedirect(reverse('employees:route'))
+    context = {'form': form}
+    return render(request, 'employees/confirmation.html', context)

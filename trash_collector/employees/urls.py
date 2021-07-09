@@ -9,5 +9,6 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('registration/', views.registration, name='registration'),
     path('route/', views.daily_view, name='route'),
+    path('confirmation/', views.confirm_pickup, name='confirmation'),
 
 ]

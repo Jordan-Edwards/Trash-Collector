@@ -12,26 +12,22 @@
             <th>Address</th>
             <th>Zipcode</th>
             <th>Pickup Confirmation</th>
+            <th>Balance</th>
+
           </tr>
         </thead>
         <tbody>
-           {% for custr in customers %}
+           {% for cus in customers %}
           <tr>
-            <td>{{ custr.name }}</td>
-            <td>{{ custr.address }}</td>
-            <td>{{ custr.zip_code }}</td>
-            <td><button type="button">Confirm</button></td>
+            <td>{{ cus.name }}</td>
+            <td>{{ cus.address }}</td>
+            <td>{{ cus.zip_code }}</td>
+            <td><a href="{% url 'employees:confirmation' %}">Confirm</a></td>
+            <td>{{ cus.balance }}</td>
           </tr>
-           {% endfor %}
 
-           {% if custr in route %}
-          <tr>
-            <td>{{ custr.name }}</td>
-            <td>{{ custr.address }}</td>
-            <td>{{ custr.zip_code }}</td>
-            <td><button type="button">Confirm</button></td>
-          </tr>
-        {% endif %}
+
+           {% endfor %}
        </tbody>
       </table>
 {% endblock %}
